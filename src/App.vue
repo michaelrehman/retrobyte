@@ -4,6 +4,7 @@ import {
 	NMessageProvider, NSpace,
 	NLayout, NLayoutHeader, NLayoutContent,
 } from 'naive-ui';
+import NavigationBar from '@/components/NavigationBar.vue';
 </script>
 
 <template>
@@ -16,6 +17,7 @@ import {
 						<header style="display: inline-block;">
 							<h1 style="display: inherit;">Retrobyte</h1>
 						</header>
+						<navigation-bar></navigation-bar>
 					</n-space>
 				</n-layout-header>
 
