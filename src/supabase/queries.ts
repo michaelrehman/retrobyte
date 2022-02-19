@@ -9,7 +9,7 @@ export const QUERIES = [
 	},
 	{
 		table: 'flows',
-		select: 'name, frequency, amount'
+		select: 'name, frequency, occurrences, amount'
 	},
 	{
 		table: 'goals',
@@ -17,6 +17,6 @@ export const QUERIES = [
 	},
 	{
 		table: 'transactions',
-		select: 'amount, dateTime, fid (name), gid (name)'
+		select: 'amount, timestamp, fid (name), gid (name)'
 	},
 ];
