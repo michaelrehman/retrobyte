@@ -4,6 +4,10 @@ import {
 	NMessageProvider, NSpace,
 	NLayout, NLayoutHeader, NLayoutContent,
 } from 'naive-ui';
+import { store, initStore } from '@/store';
+
+initStore();
+console.log(store);
 </script>
 
 <template>
