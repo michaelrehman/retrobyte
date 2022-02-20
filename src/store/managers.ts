@@ -97,3 +97,17 @@ export const goalsManager = new Manager<definitions['goals']>(
 		return { gid: goal.gid };
 	}
 );
+
+export const transactionsManager = new Manager<definitions['transactions']>(
+	'transactions', 'tid',
+	function criteria(transaction) {
+		return { tid: transaction.tid };
+	}
+);
+
+export const accountsManager = new Manager<definitions['accounts']>(
+	'accounts', 'aid',
+	function criteria(account) {
+		return { aid: account.aid };
+	}
+);
