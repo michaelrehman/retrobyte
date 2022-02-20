@@ -9,11 +9,13 @@ import EditGoal from '@/components/EditGoal.vue';
 
 import type { definitions } from '@/supabase/types';
 import { goalsManager } from '@/store/managers';
+import ModifyBalance from '../../components/ModifyBalance.vue';
 
 const isLoading = ref(true);
 initStore(() => isLoading.value = false);
 
 const showModal = ref(false);
+const showBalance = ref(false);
 const options = [
 	{
 		title: 'Score',
@@ -25,7 +27,9 @@ const options = [
 	},
 	{
 		title: 'Modify Balance',
-		action: function test() {},
+		action: function displayBalance() {
+			showBalance.value = true;
+		},
 	},
 	{
 		title: 'Add Goal',
@@ -45,8 +49,11 @@ const options = [
 		<n-modal v-model:show="showModal">
 			<edit-goal :goal="null" title='Edit Goal' :managerFunction="(goal) => goalsManager.add(goal)"></edit-goal>
 		</n-modal>
+		<n-modal v-model:show="showBalance">
+			<modify-balance />
+		</n-modal>
 
-		<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>
+		<!--<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>-->
 		<n-grid responsive="screen" cols="xs:1 s:2 m:4" y-gap="12">
 			<n-gi v-for="option in options" :key="option.title">
 				<n-button
