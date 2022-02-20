@@ -13,7 +13,7 @@ import ModifyBalance from '../../components/ModifyBalance.vue';
 
 const isLoading = ref(true);
 initStore(() => isLoading.value = false);
-
+console.log(supabase.auth.user()?.id)
 const showModal = ref(false);
 const showBalance = ref(false);
 const options = [
@@ -53,7 +53,7 @@ const options = [
 			<modify-balance />
 		</n-modal>
 
-		<!--<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>-->
+		<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>
 		<n-grid responsive="screen" cols="xs:1 s:2 m:4" y-gap="12">
 			<n-gi v-for="option in options" :key="option.title">
 				<n-button

@@ -40,7 +40,7 @@ class Manager<T> {
 	 * Adds the given data to the DB and local store.
 	 * @param data
 	 */
-	async add(inputs: T): Promise<PostgrestError | null> {
+	async add(inputs: T): Promise<{}> {
 		const { data, error } = await this.baseQuery.insert([inputs]);
 
 		if (!error && data) {
@@ -50,7 +50,7 @@ class Manager<T> {
 			store[this.table].push({ [this.pk]: data[0][this.pk], ...inputs });
 		} // if
 
-		return error;
+		return { data, error };
 	} // add
 
 	/**
@@ -109,5 +109,12 @@ export const accountsManager = new Manager<definitions['accounts']>(
 	'accounts', 'aid',
 	function criteria(account) {
 		return { aid: account.aid };
+	}
+);
+
+export const flowsManager = new Manager<definitions['flows']>(
+	'flows', 'fid',
+	function criteria(flow) {
+		return { fid: flow.fid };
 	}
 );

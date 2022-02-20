@@ -4,7 +4,9 @@ import {
     NList, NListItem, NIcon,
     NButtonGroup, NButton,
     NSpace, NProgress,
-    NTooltip, NH3, NModal
+    NTooltip, NH3, NModal,
+    NSelect
+
 } from 'naive-ui';
 import { Plus, Trash, Edit } from '@vicons/fa';
 
@@ -17,11 +19,34 @@ import GoalPaid from './GoalPaid.vue';
 const showGoalModal = ref(false);
 const showPayModal = ref(false);
 const selectedGoal = ref(null);
+const selectValue = 'date'
+const selectOptions = ref([
+    {
+        label: 'date',
+        value: 'date',
+    },
+    {
+        label: 'priority',
+        value: 'priority',
+    },
+])
+function sort() {
+    if (selectValue === 'date') {
+        store.goals.sort((a, b) => a.deadline.localeCompare(b.deadline))
+    }
+    if (selectValue === 'priority') {
+
+    }
+}
 </script>
 
 <template>
     <n-modal v-model:show="showGoalModal">
-        <edit-goal :goal="selectedGoal" title='Edit Goal' :managerFunction="(goal) => goalsManager.save(goal)"></edit-goal>
+        <edit-goal
+            :goal="selectedGoal"
+            title="Edit Goal"
+            :managerFunction="(goal) => goalsManager.save(goal)"
+        ></edit-goal>
     </n-modal>
 
     <n-modal v-model:show="showPayModal" preset="card">
@@ -29,6 +54,8 @@ const selectedGoal = ref(null);
     </n-modal>
 
     <n-h3>Your Goals</n-h3>
+    <n-select style="width: 33%;" :options="selectOptions" :onChange='sort'/>
+
     <n-list>
         <n-list-item v-for="goal in store.goals" :key="goal.gid">
             {{ goal.name }}
@@ -55,14 +82,24 @@ const selectedGoal = ref(null);
                             </n-icon>
                         </template>
                     </n-button>
-                    <n-button strong secondary type="info" @click="selectedGoal = goal; showGoalModal = true;">
+                    <n-button
+                        strong
+                        secondary
+                        type="info"
+                        @click="selectedGoal = goal; showGoalModal = true;"
+                    >
                         <template #icon>
                             <n-icon>
                                 <edit></edit>
                             </n-icon>
                         </template>
                     </n-button>
-                    <n-button strong secondary type="success" @click="selectedGoal = goal; showPayModal = true;">
+                    <n-button
+                        strong
+                        secondary
+                        type="success"
+                        @click="selectedGoal = goal; showPayModal = true;"
+                    >
                         <template #icon>
                             <n-icon>
                                 <plus></plus>
