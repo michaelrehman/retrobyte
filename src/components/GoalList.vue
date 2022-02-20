@@ -19,7 +19,7 @@ import GoalPaid from './GoalPaid.vue';
 const showGoalModal = ref(false);
 const showPayModal = ref(false);
 const selectedGoal = ref(null);
-const selectValue = 'date'
+const selectValue = ref('date')
 const selectOptions = ref([
     {
         label: 'date',
@@ -31,11 +31,14 @@ const selectOptions = ref([
     },
 ])
 function sort() {
-    if (selectValue === 'date') {
-        store.goals.sort((a, b) => a.deadline.localeCompare(b.deadline))
-    }
-    if (selectValue === 'priority') {
-
+    if (selectValue.value === 'date') {
+        store.goals.sort(function (a, b) {
+            const aDate = new Date(a.deadline)
+            const bDate = new Date(b.deadline)
+            return aDate > bDate ? 1 : -1;
+    })
+    } else {
+        store.goals.sort((a,b) => b.priority - a.priority)
     }
 }
 </script>
@@ -54,7 +57,7 @@ function sort() {
     </n-modal>
 
     <n-h3>Your Goals</n-h3>
-    <n-select style="width: 33%;" :options="selectOptions" :onChange='sort'/>
+    <n-select style="width: 33%;" :options="selectOptions" v-model:value="selectValue" @change="sort" />
 
     <n-list>
         <n-list-item v-for="goal in store.goals" :key="goal.gid">
