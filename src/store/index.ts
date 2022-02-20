@@ -2,7 +2,7 @@ import { reactive } from 'vue';
 import { supabase } from '@/supabase';
 import { QUERIES } from '@/supabase/queries';
 
-import type { definitions } from '../supabase/types';
+import type { definitions } from '@/supabase/types';
 type Store = {
 	accounts: definitions['accounts'][],
 	flows: definitions['flows'][],
