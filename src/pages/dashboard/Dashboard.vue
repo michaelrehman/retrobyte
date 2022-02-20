@@ -2,10 +2,12 @@
 import { initStore, store } from '@/store';
 import { supabase } from '@/supabase';
 
-// initStore(() => console.log(store));
-console.log(supabase.auth.user()?.id)
+import GoalList from '@/components/GoalList.vue';
+
+initStore();
 </script>
 
 <template>
 	<h1>Dashboard</h1>
+	<goal-list></goal-list>
 </template>
