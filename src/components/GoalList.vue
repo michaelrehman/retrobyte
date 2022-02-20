@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     NList, NListItem, NIcon,
     NButtonGroup, NButton,
     NSpace, NProgress,
-    NTooltip, NH3
+    NTooltip, NH3, NModal
 } from 'naive-ui';
 import { Plus, Trash, Edit } from '@vicons/fa';
+
 import { store } from '@/store';
 import { goalsManager } from '@/store/managers';
+
+import EditGoal from '@/components/EditGoal.vue';
+
+const showModal = ref(false);
 </script>
 
 <template>
@@ -15,7 +21,6 @@ import { goalsManager } from '@/store/managers';
     <n-list>
         <n-list-item v-for="goal in store.goals" :key="goal.gid">
             {{ goal.name }}
-
             <n-tooltip placement="top" trigger="hover">
                 <template #trigger>
                     <n-progress
@@ -39,7 +44,10 @@ import { goalsManager } from '@/store/managers';
                             </n-icon>
                         </template>
                     </n-button>
-                    <n-button strong secondary type="info">
+                    <n-button strong secondary type="info" @click="showModal = true">
+                        <n-modal v-model:show="showModal">
+                            <edit-goal :goal="goal" title='Edit Goal' :managerFunction="(goal) => goalsManager.save(goal)"></edit-goal>
+                        </n-modal>
                         <template #icon>
                             <n-icon>
                                 <edit></edit>

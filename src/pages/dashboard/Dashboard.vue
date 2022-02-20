@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { NGrid, NGi, NButton, NH2, NSpace, NSpin } from 'naive-ui';
+import { NGrid, NGi, NButton, NH2, NSpace, NSpin, NModal } from 'naive-ui';
 import { supabase } from '@/supabase';
 import { initStore, store } from '@/store';
 
 import GoalList from '@/components/GoalList.vue';
+import EditGoal from '@/components/EditGoal.vue';
 
 import type { definitions } from '@/supabase/types';
 import { goalsManager } from '@/store/managers';
 
 const isLoading = ref(true);
 initStore(() => isLoading.value = false);
-console.log(supabase.auth.user()?.id)
 
+const showModal = ref(false);
 const options = [
 	{
 		title: 'Score',
@@ -28,16 +29,8 @@ const options = [
 	},
 	{
 		title: 'Add Goal',
-		action: function test() {
-			const dummyGoal = <definitions['goals']>{
-				amountTotal: 2000,
-				amountPaid: 100,
-				uid: supabase.auth.user()?.id,
-				name: 'gaming',
-				priority: 12,
-				deadline: '2023-10-12 00:00:00',
-			};
-			console.log(goalsManager.add(dummyGoal));
+		action: function displayModal() {
+			showModal.value = true;
 		},
 	},
 ];
@@ -49,7 +42,11 @@ const options = [
 	</n-space>
 
 	<div v-else-if="!isLoading">
-		<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>
+		<n-modal v-model:show="showModal">
+			<edit-goal :goal="null" title='Edit Goal' :managerFunction="(goal) => goalsManager.add(goal)"></edit-goal>
+		</n-modal>
+
+		<!-- <n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2> -->
 		<n-grid responsive="screen" cols="xs:1 s:2 m:4" y-gap="12">
 			<n-gi v-for="option in options" :key="option.title">
 				<n-button
