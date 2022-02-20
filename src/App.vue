@@ -38,5 +38,6 @@ body,
 .n-config-provider,
 .n-layout {
 	height: 100%;
+	font-family: 'Press Start 2P';
 }
 </style>
