@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router';
 import { useMessage } from 'naive-ui';
 import { supabase } from '@/supabase';
 import AuthForm from '@/components/AuthForm.vue';
+import { accountsManager } from '@/store/managers';
 
 const router = useRouter();
 const message = useMessage();

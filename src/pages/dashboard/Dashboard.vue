@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { NGrid, NGi, NButton, NH2, NSpace, NSpin, NModal } from 'naive-ui';
-import { supabase } from '@/supabase';
 import { initStore, store } from '@/store';
 
 import GoalList from '@/components/GoalList.vue';
 import EditGoal from '@/components/EditGoal.vue';
 
-import type { definitions } from '@/supabase/types';
 import { goalsManager } from '@/store/managers';
 import ModifyBalance from '../../components/ModifyBalance.vue';
 
@@ -16,14 +15,14 @@ initStore(() => isLoading.value = false);
 
 const showModal = ref(false);
 const showBalance = ref(false);
+
+const router = useRouter();
 const options = [
 	{
-		title: 'Score',
-		action: function test() {},
-	},
-	{
 		title: 'Budget Breakdown',
-		action: function test() {},
+		action: function goToMetrics() {
+			router.push({ name: 'Metrics' });
+		},
 	},
 	{
 		title: 'Modify Balance',
@@ -53,8 +52,13 @@ const options = [
 			<modify-balance />
 		</n-modal>
 
+<<<<<<< Updated upstream
 		<!--<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>-->
 		<n-grid responsive="screen" cols="xs:1 s:2 m:4" y-gap="12">
+=======
+		<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>
+		<n-grid responsive="screen" cols="xs:1 s:2 m:3" y-gap="12">
+>>>>>>> Stashed changes
 			<n-gi v-for="option in options" :key="option.title">
 				<n-button
 					size="large"

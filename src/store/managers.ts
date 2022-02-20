@@ -50,7 +50,7 @@ class Manager<T> {
 			store[this.table].push({ [this.pk]: data[0][this.pk], ...inputs });
 		} // if
 
-		return error;
+		return { data, error };
 	} // add
 
 	/**

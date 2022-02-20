@@ -10,13 +10,13 @@ import { store } from '@/store';
 const { goal } = defineProps<{ goal: definitions['goals'] }>();
 const input = ref(0);
 
-function handleSubmit() {
+async function handleSubmit() {
 	// Update amount paid off
 	Object.assign(goal, { amountPaid: goal.amountPaid + input.value });
-	goalsManager.save(goal);
+	await goalsManager.save(goal);
 
 	// Create new transcation
-	transactionsManager.add({
+	await transactionsManager.add({
 		amount: -input.value,
 		gid: goal.gid,
 		timestamp: new Date(Date.now()).toDateString(),
@@ -25,7 +25,7 @@ function handleSubmit() {
 	});
 
 	// update account balance
-	accountsManager.save({
+	await accountsManager.save({
 		aid: store.accounts[0].aid,
 		balance: store.accounts[0].balance - input.value,
 		// @ts-ignore silencio
