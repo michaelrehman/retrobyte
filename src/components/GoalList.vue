@@ -14,9 +14,14 @@ import { goalsManager } from '@/store/managers';
 import EditGoal from '@/components/EditGoal.vue';
 
 const showModal = ref(false);
+const selectedGoal = ref(null);
 </script>
 
 <template>
+    <n-modal v-model:show="showModal">
+        <edit-goal :goal="selectedGoal" title='Edit Goal' :managerFunction="(goal) => goalsManager.save(goal)"></edit-goal>
+    </n-modal>
+
     <n-h3>Your Goals</n-h3>
     <n-list>
         <n-list-item v-for="goal in store.goals" :key="goal.gid">
@@ -44,10 +49,7 @@ const showModal = ref(false);
                             </n-icon>
                         </template>
                     </n-button>
-                    <n-button strong secondary type="info" @click="showModal = true">
-                        <n-modal v-model:show="showModal">
-                            <edit-goal :goal="goal" title='Edit Goal' :managerFunction="(goal) => goalsManager.save(goal)"></edit-goal>
-                        </n-modal>
+                    <n-button strong secondary type="info" @click="selectedGoal = goal; showModal = true;">
                         <template #icon>
                             <n-icon>
                                 <edit></edit>

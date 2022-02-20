@@ -46,7 +46,7 @@ const options = [
 			<edit-goal :goal="null" title='Edit Goal' :managerFunction="(goal) => goalsManager.add(goal)"></edit-goal>
 		</n-modal>
 
-		<!-- <n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2> -->
+		<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>
 		<n-grid responsive="screen" cols="xs:1 s:2 m:4" y-gap="12">
 			<n-gi v-for="option in options" :key="option.title">
 				<n-button

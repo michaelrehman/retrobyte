@@ -32,7 +32,7 @@ const inputs = ref({
     priority: goal?.priority || 0,
     gid: goal?.gid,
     uid: goal?.uid
-})
+});
 const rules = ref({
     name: [
         {
@@ -65,30 +65,27 @@ const rules = ref({
             trigger: 'blur',
         },
     ],
-})
-const disabled = ref(false)
+});
+const disabled = ref(false);
 
 async function handleSubmit() {
-    console.log({ 
+    const goalInputs = <definitions['goals']>{
         uid: supabase.auth.user()?.id,
         name: inputs.value.name,
         amountTotal: inputs.value.amount,
         amountPaid: 0.00,
         deadline: inputs.value.deadline,
         priority: inputs.value.priority,
-    })
-    // const error = await managerFunction({ 
-    //     uid: supabase.auth.user()?.id,
-    //     name: inputs.value.name,
-    //     amountTotal: inputs.value.amount,
-    //     amountPaid: 0.00,
-    //     deadline: inputs.value.deadline,
-    //     priority: inputs.value.priority,
-    // });
+    };
 
-    // if (error) {
-    //     console.error(error)
-    // }
+    if (inputs.value?.gid) {
+        Object.assign(goalInputs, { gid: inputs.value?.gid });
+    } // if
+
+    const error = await managerFunction(goalInputs);
+    if (error) {
+        console.error(error);
+    } // if
 }
 </script>
 
