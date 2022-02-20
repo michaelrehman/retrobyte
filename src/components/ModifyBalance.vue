@@ -2,9 +2,10 @@
 import { NH1, NForm, NCard, NInput, NButton, NFormItem, NInputNumber, NDatePicker } from 'naive-ui';
 import { ref } from 'vue';
 
-import { accountsManager } from '@/store/managers';
+import { accountsManager, flowsManager, transactionsManager } from '@/store/managers';
 import type { definitions } from '@/supabase/types';
 import { supabase } from '@/supabase';
+import { store } from '@/store';
 
 const title = "Modify Balance"
 const disabled = ref(false)
@@ -21,21 +22,33 @@ const rules = ref({
 
 })
 
-function handleSubmit() {
-    const flowInputs = <definitions['flows']> {
+async function handleSubmit() {
+    const flowInputs = <definitions['flows']>{
         uid: supabase.auth.user()?.id,
         name: inputs.value.name,
         occurrences: inputs.value.occurrences,
         frequency: inputs.value.frequency,
         amount: inputs.value.amount,
     };
+    const { data } = await flowsManager.add(flowInputs);
+
+    // @ts-ignore silencio
     const transactionInputs = <definitions['transactions']>{
         uid: supabase.auth.user()?.id,
-        gid: ref(null),
-        fid: flowInputs.fid,
-        timestamp: new Date(),
+        gid: null,
+        fid: data.fid,
+        timestamp: new Date(Date.now()).toDateString(),
         amount: inputs.value.amount,
     };
+    transactionsManager.add(transactionInputs);
+
+    // update account balance
+	accountsManager.save({
+		aid: store.accounts[0].aid,
+		balance: store.accounts[0].balance + inputs.value.amount,
+		// @ts-ignore silencio
+		uid: supabase.auth.user()?.id,
+	});
 }
 
 </script>

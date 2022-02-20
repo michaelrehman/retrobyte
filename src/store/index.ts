@@ -3,6 +3,7 @@ import { supabase } from '@/supabase';
 import { QUERIES } from '@/supabase/queries';
 
 import type { definitions } from '@/supabase/types';
+import { accountsManager } from './managers';
 type Store = {
 	accounts: definitions['accounts'][],
 	flows: definitions['flows'][],
@@ -35,6 +36,15 @@ export const store = reactive<Store>({});
 
 		error ? console.error(error) : Object.assign(store, { [table]: data });
 	}));
+
+	if (store.accounts.length === 0) {
+		const { data } = await accountsManager.add({
+			balance: 0,
+			// @ts-ignore
+			uid: supabase.auth.user()?.id
+		});
+		store.accounts.push(data);
+	}
 
 	isStoreInitalized = true;
 	onInit && onInit();

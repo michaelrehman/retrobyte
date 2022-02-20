@@ -52,13 +52,9 @@ const options = [
 			<modify-balance />
 		</n-modal>
 
-<<<<<<< Updated upstream
-		<!--<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>-->
-		<n-grid responsive="screen" cols="xs:1 s:2 m:4" y-gap="12">
-=======
+
 		<n-h2>Current Balance: ${{ store.accounts[0].balance }}</n-h2>
 		<n-grid responsive="screen" cols="xs:1 s:2 m:3" y-gap="12">
->>>>>>> Stashed changes
 			<n-gi v-for="option in options" :key="option.title">
 				<n-button
 					size="large"
