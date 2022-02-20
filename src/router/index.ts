@@ -31,6 +31,15 @@ const routes: RouteRecordRaw[] = [
 		},
 	},
 	{
+		path: '/metrics',
+		name: 'Metrics',
+		// @ts-ignore
+		component: () => import('@/pages/metrics/Metrics.vue'),
+		meta: {
+			requiresAuth: true,
+		},
+	},
+	{
 		path: '/logout',
 		name: 'Logout',
 		// @ts-ignore
