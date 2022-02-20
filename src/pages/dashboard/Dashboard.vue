@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NGrid, NGi, NButton } from 'naive-ui';
+import { NGrid, NGi, NButton, NH2 } from 'naive-ui';
 import { initStore, store } from '@/store';
 
 import GoalList from '@/components/GoalList.vue';
@@ -29,6 +29,7 @@ const options = [
 </script>
 
 <template>
+	<n-h2>Current Balance: ${{store.accounts[0].balance}}</n-h2>
 	<n-grid responsive="screen" cols="xs:1 s:2 m:4" y-gap="12">
 		<n-gi v-for="option in options" :key="option.title">
 			<n-button size="large" ghost style="width: 200px; height: 200px" @click="option.action">{{ option.title }}</n-button>

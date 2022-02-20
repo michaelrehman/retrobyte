@@ -22,7 +22,7 @@ import NavigationBar from '@/components/NavigationBar.vue';
 					</n-space>
 				</n-layout-header>
 
-				<n-layout-content content-style="max-width: 80%; margin: auto;">
+				<n-layout-content content-style="max-width: 80%; margin: auto; padding-top: 1rem;">
 					<router-view></router-view>
 				</n-layout-content>
 			</n-layout>

@@ -2,12 +2,9 @@
 import { NList, NListItem, NThing, NIcon, NButton, NSpace, NProgress, NTooltip, useMessage, NH2, NH3  } from 'naive-ui';
 import { Plus, Trash, Edit } from '@vicons/fa';
 import { store } from '@/store';
-import { ref, defineComponent } from 'vue';
-
 </script>
 
 <template>
-    <n-h2>Current Balance: ${{store.accounts[0].balance}} </n-h2>
     <n-h3>Your Goals</n-h3>
     <n-list>
         <n-list-item v-for="goal in store.goals" :key="goal.gid">
