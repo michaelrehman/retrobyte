@@ -14,14 +14,18 @@ import { store } from '@/store';
 class Manager<T> {
 	/** The corresponding DB table/store key. */
 	table: string;
+	/** The primary key. */
+	pk: string;
 	/** Match criteria for update and delete operations. */
 	produceMatchCriteria: (data: T) => {};
 
 	constructor(
 		table: string,
+		pk: string,
 		produceMatchCriteria: (data: T) => {},
 	) {
 		this.table = table;
+		this.pk = pk;
 		this.produceMatchCriteria = produceMatchCriteria;
 	} // constructor
 
@@ -43,10 +47,9 @@ class Manager<T> {
 			// @ts-ignore
 			// Versions created on the frontend aren't given an index,
 			// so give it the index insertion into the store.
-			store[this.table].push({ id: data[0].id, ...inputs });
+			store[this.table].push({ [this.pk]: data[0][this.pk], ...inputs });
 		} // if
 
-		console.log(error?.message);
 		return error;
 	} // add
 
@@ -57,6 +60,15 @@ class Manager<T> {
 	async save(data: T): Promise<PostgrestError | null> {
 		const { error } = await this.baseQuery.update(data)
 			.match(this.produceMatchCriteria(data));
+
+		if (!error) {
+			// Update store copy
+			// @ts-ignore
+			const index = store[this.table].findIndex((item) => item[this.pk] === data[this.pk]);
+			// @ts-ignore
+			store[this.table][index] = { ...data };
+		} // if
+
 		return error;
 	} // save
 
@@ -80,7 +92,7 @@ class Manager<T> {
 } // Manager<T>
 
 export const goalsManager = new Manager<definitions['goals']>(
-	'goals',
+	'goals', 'gid',
 	function criteria(goal) {
 		return { gid: goal.gid };
 	}
