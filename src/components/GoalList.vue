@@ -12,14 +12,20 @@ import { store } from '@/store';
 import { goalsManager } from '@/store/managers';
 
 import EditGoal from '@/components/EditGoal.vue';
+import GoalPaid from './GoalPaid.vue';
 
-const showModal = ref(false);
+const showGoalModal = ref(false);
+const showPayModal = ref(false);
 const selectedGoal = ref(null);
 </script>
 
 <template>
-    <n-modal v-model:show="showModal">
+    <n-modal v-model:show="showGoalModal">
         <edit-goal :goal="selectedGoal" title='Edit Goal' :managerFunction="(goal) => goalsManager.save(goal)"></edit-goal>
+    </n-modal>
+
+    <n-modal v-model:show="showPayModal" preset="card">
+        <goal-paid :goal="selectedGoal"></goal-paid>
     </n-modal>
 
     <n-h3>Your Goals</n-h3>
@@ -49,14 +55,14 @@ const selectedGoal = ref(null);
                             </n-icon>
                         </template>
                     </n-button>
-                    <n-button strong secondary type="info" @click="selectedGoal = goal; showModal = true;">
+                    <n-button strong secondary type="info" @click="selectedGoal = goal; showGoalModal = true;">
                         <template #icon>
                             <n-icon>
                                 <edit></edit>
                             </n-icon>
                         </template>
                     </n-button>
-                    <n-button strong secondary type="success">
+                    <n-button strong secondary type="success" @click="selectedGoal = goal; showPayModal = true;">
                         <template #icon>
                             <n-icon>
                                 <plus></plus>
