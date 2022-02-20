@@ -5,18 +5,18 @@
 export const QUERIES = [
 	{
 		table: 'accounts',
-		select: 'balance',
+		select: '*',
 	},
 	{
 		table: 'flows',
-		select: 'name, frequency, occurrences, amount'
+		select: '*'
 	},
 	{
 		table: 'goals',
-		select: 'name, amountTotal, amountPaid, deadline, priority'
+		select: '*'
 	},
 	{
 		table: 'transactions',
-		select: 'amount, timestamp, fid (name), gid (name)'
+		select: '*'
 	},
 ];

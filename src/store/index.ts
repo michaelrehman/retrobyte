@@ -2,8 +2,17 @@ import { reactive } from 'vue';
 import { supabase } from '@/supabase';
 import { QUERIES } from '@/supabase/queries';
 
+import type { definitions } from '../supabase/types';
+type Store = {
+	accounts: definitions['accounts'][],
+	flows: definitions['flows'][],
+	goals: definitions['goals'][],
+	transactions: definitions['transactions'][]
+};
+
 let isStoreInitalized = false;
-export const store = reactive({});
+// @ts-ignore properties dynamically loaded
+export const store = reactive<Store>({});
 
 /**
  * Intializes the global store with the necessary data from the database.
